@@ -2,8 +2,8 @@ name: Generate and Update API Docs
 
 on:
   workflow_dispatch: # Cho phép bạn bấm nút chạy thủ công từ tab Actions
-  schedule:
-    - cron: '0 0 * * *' # Chạy tự động vào nửa đêm mỗi ngày (UTC). Bạn có thể bỏ phần này nếu không cần.
+  # schedule:
+  #   - cron: '0 0 * * *' # Chạy tự động vào nửa đêm mỗi ngày (UTC). Bạn có thể bỏ phần này nếu không cần.
 
 jobs:
   update-docs:
