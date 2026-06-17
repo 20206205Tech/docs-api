@@ -1,0 +1,38 @@
+name: Generate and Update API Docs
+
+on:
+  workflow_dispatch: # Cho phép bạn bấm nút chạy thủ công từ tab Actions
+  schedule:
+    - cron: '0 0 * * *' # Chạy tự động vào nửa đêm mỗi ngày (UTC). Bạn có thể bỏ phần này nếu không cần.
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    
+    # Cấp quyền ghi để GitHub Actions có thể push commit mới lên repo
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Cài đặt Node.js để chạy npx
+
+      - name: Generate Markdown API documentation
+        run: |
+          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-persona-service/openapi.json -g markdown -o ./api-docs
+
+      - name: Check for changes and Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Thêm thư mục api-docs vào staging
+          git add ./api-docs
+          
+          # Kiểm tra xem có sự thay đổi nào không. Nếu có thì commit và push.
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: auto-update API documentation" && git push)
