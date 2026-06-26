@@ -1,15 +1,15 @@
 name: Generate and Update API Docs
 
 on:
-  workflow_dispatch: # Cho phép bạn bấm nút chạy thủ công từ tab Actions
+  workflow_dispatch: # Cho phép chạy thủ công
   # schedule:
-  #   - cron: '0 0 * * *' # Chạy tự động vào nửa đêm mỗi ngày (UTC). Bạn có thể bỏ phần này nếu không cần.
+  #   - cron: '0 0 * * *'
 
 jobs:
   update-docs:
     runs-on: ubuntu-latest
     
-    # Cấp quyền ghi để GitHub Actions có thể push commit mới lên repo
+    # Cấp quyền ghi để push commit
     permissions:
       contents: write 
 
@@ -20,19 +20,35 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Cài đặt Node.js để chạy npx
+          node-version: '20'
 
-      - name: Generate Markdown API documentation
+      - name: Generate Markdown API documentation for all services
         run: |
-          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-persona-service/openapi.json -g markdown -o ./api-docs
+          # Tạo thư mục docs tổng
+          mkdir -p ./docs
+          
+          echo "Đang tạo docs cho code-payment-service..."
+          npx @openapitools/openapi-generator-cli generate -i https://code-payment-service.20206205.tech/code-payment-service/docs-json -g markdown -o ./docs/code-payment-service
+
+          echo "Đang tạo docs cho code-document-service..."
+          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-document-service/openapi.json -g markdown -o ./docs/code-document-service
+
+          echo "Đang tạo docs cho code-persona-service..."
+          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-persona-service/openapi.json -g markdown -o ./docs/code-persona-service
+
+          echo "Đang tạo docs cho code-conversation-service..."
+          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-conversation-service/docs-json -g markdown -o ./docs/code-conversation-service
+
+          echo "Đang tạo docs cho code-chatbot-service..."
+          npx @openapitools/openapi-generator-cli generate -i http://134.185.92.211/code-chatbot-service/openapi.json -g markdown -o ./docs/code-chatbot-service
 
       - name: Check for changes and Commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Thêm thư mục api-docs vào staging
-          git add ./api-docs
+          # Đổi đường dẫn add thành thư mục docs mới
+          git add ./docs
           
-          # Kiểm tra xem có sự thay đổi nào không. Nếu có thì commit và push.
-          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: auto-update API documentation" && git push)
+          # Kiểm tra và commit nếu có sự thay đổi
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: auto-update API documentation for all services" && git push)
