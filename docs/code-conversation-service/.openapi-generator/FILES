@@ -1,0 +1,10 @@
+.openapi-generator-ignore
+Apis/AppApi.md
+Apis/BookmarksApi.md
+Apis/ChatsApi.md
+Apis/SharedChatsApi.md
+Models/AddBookmarkRequestDto.md
+Models/CreateFolderBookmarkRequestDto.md
+Models/GenerateLinkShareRequestDto.md
+Models/StreamChatRequestDto.md
+README.md

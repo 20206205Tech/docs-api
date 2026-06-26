@@ -1,0 +1,8 @@
+.openapi-generator-ignore
+Apis/AppApi.md
+Apis/PaymentControllersApi.md
+Apis/PlansApi.md
+Apis/SubscriptionsApi.md
+Models/CreatePlanRequestDto.md
+Models/PurchaseSubscriptionRequestDto.md
+README.md

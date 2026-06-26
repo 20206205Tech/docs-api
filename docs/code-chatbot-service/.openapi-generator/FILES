@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+Apis/ChatsApi.md
+Apis/DefaultApi.md
+Models/ChatDetailResponse.md
+Models/ChatListResponse.md
+Models/ChatMessageDTO.md
+Models/ChatSummaryDTO.md
+Models/HTTPValidationError.md
+Models/Location_inner.md
+Models/ReasoningStepDTO.md
+Models/SourceDTO.md
+Models/ValidationError.md
+README.md

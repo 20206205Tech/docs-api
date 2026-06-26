@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+Apis/DefaultApi.md
+Apis/DocumentsApi.md
+Models/BaseResponse.md
+Models/BaseResponse_DocumentDetailResponse_.md
+Models/BaseResponse_DocumentUploadResponse_.md
+Models/DocumentDetailResponse.md
+Models/DocumentUploadResponse.md
+Models/HTTPValidationError.md
+Models/Location_inner.md
+Models/ValidationError.md
+README.md
